@@ -41,6 +41,8 @@ public:
 int main()
 {
     Storage mas(10);
+    cout << endl;
+
 
     
 }
