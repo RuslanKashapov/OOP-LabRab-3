@@ -21,7 +21,7 @@ public:
 
 class Storage
 {
-protected:
+public:
     int size;
     Object **object;
 public:
@@ -30,7 +30,27 @@ public:
         cout << "Storage(int size)" << endl;
         this->size = size;
         object = new Object *[size];
+        for (int i = 0; i < size; i++)
+        {
+            object[i] = NULL;
+            cout << object[i] << endl;
+        }
     }
+
+    void AddObject(Object* s, int i)
+    {
+        if ((i < size) && object[i] == NULL)
+        {
+            object[i] = s;
+            size += 1;
+            cout << "void AddObject(Object* s, int i)" << endl;
+        }
+        else
+        {
+            cout << "Oшибка" << endl;
+        }
+    }
+
     ~Storage()
     {
         cout << "~Storage()" << endl;
@@ -40,10 +60,10 @@ public:
 
 int main()
 {
+    setlocale(LC_ALL, "rus");
+    Object* t = new Object;
     Storage mas(10);
-    cout << endl;
+    mas.AddObject(t, 5);
 
-
-    
 }
 
