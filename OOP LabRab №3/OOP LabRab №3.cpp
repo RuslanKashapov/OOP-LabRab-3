@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 using namespace std;
 
+//класс, объекты которого мы будем помещать в хранилище
 class Object
 {
 public:
@@ -16,6 +17,38 @@ public:
     void show()
     {
 
+    }
+};
+
+
+class Car :public Object
+{
+protected:
+    int num_of_doors;
+    string model;
+public:
+    Car()
+    {
+     cout << "Car()" << endl;
+     num_of_doors = 0;
+     model = "";
+    }
+    Car(int num_of_doors, string model)
+    {
+        cout << "Car(int num_of_doors, string model)" << endl;
+        this->num_of_doors = num_of_doors;
+        this->model = model;
+    }
+    Car(const Car &c)
+    {
+        cout << "Car(const Car &c)" << endl;
+        num_of_doors = c.num_of_doors;
+        model = c.model;
+    }
+    ~Car()
+    {
+        cout << num_of_doors << " " << model << " ";
+        cout << "~Car()" << endl;
     }
 };
 
@@ -61,9 +94,10 @@ public:
 int main()
 {
     setlocale(LC_ALL, "rus");
-    Object* t = new Object;
-    Storage mas(10);
-    mas.AddObject(t, 5);
+    Storage storage(100);
+    Object* t = new Car(5, "Mazda");
+    storage.AddObject(t, 5);
+    delete t;
 
 }
 
