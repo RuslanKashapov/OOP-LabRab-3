@@ -66,7 +66,6 @@ public:
         for (int i = 0; i < size; i++)
         {
             object[i] = NULL;
-            cout << object[i] << endl;
         }
     }
 
@@ -80,7 +79,19 @@ public:
         }
         else
         {
-            cout << "Oшибка" << endl;
+            cout << "Oшибка void AddObject(Object* s, int i)" << endl;
+        }
+    }
+    Object* getObject(int i)
+    {
+        if (object[i] != NULL)
+        {
+            cout << "Object* getObject(int i)" << endl;
+            return object[i];
+        }
+        else
+        {
+            cout << "Ошибка Object* getObject(int i)" << endl;
         }
     }
 
