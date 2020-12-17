@@ -1,7 +1,7 @@
 ﻿#include <iostream>
+#include <ctime>
 using namespace std;
 
-//класс, объекты которого мы будем помещать в хранилище
 class Object
 {
 public:
@@ -14,12 +14,11 @@ public:
         cout << "~Object" << endl;
     }
 public:
-    void show()
+    virtual void show()
     {
 
     }
 };
-
 
 class Car :public Object
 {
@@ -45,10 +44,15 @@ public:
         num_of_doors = c.num_of_doors;
         model = c.model;
     }
-    ~Car()
+     ~Car()
     {
         cout << num_of_doors << " " << model << " ";
         cout << "~Car()" << endl;
+    }
+    void show()
+    {
+        cout << "Автомобиль" << endl;
+        cout << "Характеристики автомобиля: " << num_of_doors << model << endl;
     }
 };
 class Truck : public Object
@@ -85,34 +89,35 @@ public:
     }
     void show()
     {
-        cout << "Truck" << endl;
+        cout << "Грузовик" << endl;
         cout << "Характеристики грузовика: " << num_of_doors << weight << model << endl;
     }
 };
 
 class Storage
 {
-public:
+protected:
+    int j;
     int size;
     Object **object;
 public:
-    Storage(int size)//создаём динамический массив в конструкторе 
+    Storage(int size)
     {
         cout << "Storage(int size)" << endl;
         this->size = size;
+        int j = 0;
         object = new Object *[size];
         for (int i = 0; i < size; i++)
         {
             object[i] = NULL;
         }
     }
-
     void AddObject(Object* s, int i)
     {
-        if ((i < size) && object[i] == NULL)
+        if ((i < size))
         {
             object[i] = s;
-            size += 1;
+            j++;
             cout << "void AddObject(Object* s, int i)" << endl;
         }
         else
@@ -132,6 +137,19 @@ public:
             cout << "Ошибка Object* getObject(int i)" << endl;
         }
     }
+    void delObject(int i)
+    {
+        if (object[i] != NULL)
+        {
+            object[i] = NULL;
+            j--;
+            cout << "void delObject(int i)" << endl;
+        }
+        else
+        {
+            cout << "Oшибка  void delObject(int i)" << endl;
+        }
+    }
     ~Storage()
     {
         cout << "~Storage()" << endl;
@@ -141,11 +159,48 @@ public:
 
 int main()
 {
+
     setlocale(LC_ALL, "rus");
-    Storage storage(100);
-    Object* t = new Car(5, "Mazda");
-    storage.AddObject(t, 5);
-    delete t;
+    unsigned int start_time = clock();
+    Storage storage(10000);
+    for (int i = 0; i < 10000; i++)
+    {
+        if (rand() % 2 == 0)
+        {
+            Object *с = new Car;
+            if (rand() % 3 == 0)
+            {
+                storage.AddObject(с, i);
+            }
+            else if (rand() % 4 == 1)
+            {
+                storage.delObject(i);
+            }
+            else
+            {
+                storage.getObject(i);
+            }
+        }
+        else
+        {
+            Object *t  = new Truck;
+            if (rand() % 3 == 0)
+            {
+                storage.AddObject(t, i);
+            }
+            else if (rand() % 4 == 1)
+            {
+                storage.delObject(i);
+            }
+            else
+            {
+                storage.getObject(i);
+            }
+        }
+    }
+    unsigned int end_time = clock();
+    unsigned int result_time = end_time - start_time;
+    cout << "Время работы: " << result_time << endl;
 
 }
 
