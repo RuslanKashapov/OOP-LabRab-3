@@ -9,7 +9,7 @@ public:
     {
 
     };
-    ~Object()
+    virtual ~Object()
     {
         cout << "~Object" << endl;
     }
@@ -49,6 +49,44 @@ public:
     {
         cout << num_of_doors << " " << model << " ";
         cout << "~Car()" << endl;
+    }
+};
+class Truck : public Object
+{
+protected:
+    int num_of_doors;
+    int weight;
+    string model;
+public:
+    Truck()
+    {
+        num_of_doors = 0;
+        weight = 0;
+        model = "";
+        cout << "Truck()" << endl;
+    }
+    Truck(int num_of_doors, int weight, string model)
+    {
+        cout << "Truck(int num_of_doors, int weight, string model)" << endl;
+        this->num_of_doors = num_of_doors;
+        this->weight = weight;
+        this->model = model;
+    }
+    Truck(Truck& t)
+    {
+        cout << "Truck(Truck& t)" << endl;
+        num_of_doors = t.num_of_doors;
+        weight = t.weight;
+        model = t.model;
+    }
+    ~Truck()
+    {
+        cout << " ~Truck()" << endl;
+    }
+    void show()
+    {
+        cout << "Truck" << endl;
+        cout << "Характеристики грузовика: " << num_of_doors << weight << model << endl;
     }
 };
 
@@ -94,7 +132,6 @@ public:
             cout << "Ошибка Object* getObject(int i)" << endl;
         }
     }
-
     ~Storage()
     {
         cout << "~Storage()" << endl;
